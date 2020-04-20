@@ -6,14 +6,14 @@
     <img src="../assets/logo.png" alt="">
 </div>
 <!-- 登录表单区域 ref生成form实例对象用于重置等事件-->
-<el-form ref="form" :model="form" :rules="rules" label-width="0px" class="login_form">
+<el-form ref="form" :model="loginForm" :rules="rules" label-width="0px" class="login_form">
     <!-- admin -->
 <el-form-item prop="username">
-    <el-input  v-model="form.username" prefix-icon="iconfont icon-user"></el-input>
+    <el-input  v-model="loginForm.username" prefix-icon="iconfont icon-user"></el-input>
 </el-form-item>
 <!-- password -->
 <el-form-item prop="password">
-    <el-input  v-model="form.password" type="password" prefix-icon="iconfont icon-3702mima"></el-input>
+    <el-input  v-model="loginForm.password" type="password" prefix-icon="iconfont icon-3702mima"></el-input>
 </el-form-item>
 <!-- button -->
 <el-form-item class="btns">
@@ -29,9 +29,9 @@ export default {
   data () {
     return {
     //   双向绑定对象
-      form: {
-        username: '',
-        password: ''
+      loginForm: {
+        username: 'admin',
+        password: '123456'
       },
       rules: {
         username: [
@@ -50,10 +50,20 @@ export default {
     reset () {
       this.$refs.form.resetFields()
     },
+    // 登录验证请求
     login () {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         // eslint-disable-next-line no-useless-return
         if (!valid) return
+        // eslint-disable-next-line no-unused-vars
+        const { data: res } = await this.$http.post('login', this.loginForm)
+        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        this.$message.success('登录成功')
+        // 将登录成功之后的token保存到客户端的session storage中，因为项目中除了登录之外的其他
+        // API接口必须登录后访问。token只应在当前打开期间生效
+        window.sessionStorage.setItem('token', res.data.token)
+        // 通过编程导航，转到home
+        this.$router.push('/home')
       })
     }
   }
