@@ -2,7 +2,8 @@ import Vue from 'vue'
 // eslint-disable-next-line import/no-duplicates
 import {
   Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu,
-  Submenu, MenuItemGroup, MenuItem, Breadcrumb, BreadcrumbItem, Card, Row, Col
+  Submenu, MenuItemGroup, MenuItem, Breadcrumb, BreadcrumbItem, Card, Row, Col,
+  Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox
 } from 'element-ui'
 // 导入弹框组件
 // eslint-disable-next-line import/no-duplicates
@@ -24,5 +25,12 @@ Vue.use(BreadcrumbItem)
 Vue.use(Card)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Switch)
+Vue.use(Tooltip)
+Vue.use(Pagination)
+Vue.use(Dialog)
 // message自定义属性
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
