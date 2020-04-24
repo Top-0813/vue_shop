@@ -47,6 +47,6 @@ Vue.use(Checkbox)
 Vue.use(Upload)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
-// message自定义属性
+// 将Message以$message为名挂载到全局Vue的方法上，这样所有vm实例都可以使用这个方法
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
