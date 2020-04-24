@@ -20,19 +20,19 @@
           <el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="selectedCateKeys" @change="handleChange">
           </el-cascader>
         </el-col>
-      </el-row>
+    </el-row>
 
-      <!-- tab 页签区域 -->
-      <el-tabs v-model="activeName" @tab-click="handleTabClick">
+    <!-- tab 页签区域 -->
+    <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
         <el-tab-pane label="动态参数" name="many">
-          <!-- 添加参数的按钮 -->
-          <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</el-button>
-          <!-- 动态参数表格 -->
-          <el-table :data="manyTableData" border stripe>
+        <!-- 添加参数的按钮 -->
+        <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</el-button>
+        <!-- 动态参数表格 -->
+        <el-table :data="manyTableData" border stripe>
             <!-- 展开行 -->
             <el-table-column type="expand">
-              <template slot-scope="scope">
+            <template slot-scope="scope">
                 <!-- 循环渲染Tag标签 -->
                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
                 <!-- 输入的文本框 -->
@@ -40,28 +40,28 @@
                 </el-input>
                 <!-- 添加按钮 -->
                 <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
-              </template>
+            </template>
             </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
             <el-table-column label="参数名称" prop="attr_name"></el-table-column>
             <el-table-column label="操作">
-              <template slot-scope="scope">
+            <template slot-scope="scope">
                 <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
                 <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeParams(scope.row.attr_id)">删除</el-button>
-              </template>
+            </template>
             </el-table-column>
-          </el-table>
+        </el-table>
         </el-tab-pane>
         <!-- 添加静态属性的面板 -->
         <el-tab-pane label="静态属性" name="only">
-          <!-- 添加属性的按钮 -->
-          <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加属性</el-button>
-          <!-- 静态属性表格 -->
-          <el-table :data="onlyTableData" border stripe>
+        <!-- 添加属性的按钮 -->
+        <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加属性</el-button>
+        <!-- 静态属性表格 -->
+        <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
             <el-table-column type="expand">
-              <template slot-scope="scope">
+            <template slot-scope="scope">
                 <!-- 循环渲染Tag标签 -->
                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
                 <!-- 输入的文本框 -->
@@ -69,50 +69,50 @@
                 </el-input>
                 <!-- 添加按钮 -->
                 <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
-              </template>
+            </template>
             </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
             <el-table-column label="属性名称" prop="attr_name"></el-table-column>
             <el-table-column label="操作">
-              <template slot-scope="scope">
+            <template slot-scope="scope">
                 <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
                 <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeParams(scope.row.attr_id)">删除</el-button>
-              </template>
+            </template>
             </el-table-column>
-          </el-table>
+        </el-table>
         </el-tab-pane>
-      </el-tabs>
+    </el-tabs>
     </el-card>
 
     <!-- 添加参数的对话框 -->
     <el-dialog :title="'添加' + titleText" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
-      <!-- 添加参数的对话框 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+    <!-- 添加参数的对话框 -->
+    <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
         <el-form-item :label="titleText" prop="attr_name">
-          <el-input v-model="addForm.attr_name"></el-input>
+        <el-input v-model="addForm.attr_name"></el-input>
         </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
+    </el-form>
+    <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addParams">确 定</el-button>
-      </span>
+    </span>
     </el-dialog>
 
     <!-- 修改参数的对话框 -->
     <el-dialog :title="'修改' + titleText" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
-      <!-- 添加参数的对话框 -->
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
+    <!-- 添加参数的对话框 -->
+    <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item :label="titleText" prop="attr_name">
-          <el-input v-model="editForm.attr_name"></el-input>
+        <el-input v-model="editForm.attr_name"></el-input>
         </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
+    </el-form>
+    <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editParams">确 定</el-button>
-      </span>
+    </span>
     </el-dialog>
-  </div>
+</div>
 </template>
 
 <script>
